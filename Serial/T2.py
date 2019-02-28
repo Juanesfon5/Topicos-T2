@@ -1,7 +1,9 @@
-import sys
-import csv
-import os
-maxInt = sys.maxsize
+#!/usr/local/bin/python3
+
+from sys import maxsize
+from csv import DictReader, field_size_limit
+from os import listdir
+maxInt = maxsize
 decrement = True
 
 def test():
@@ -13,13 +15,14 @@ def test():
     arr = []
     count = 0
 
-    listDir = os.listdir('../datasets/all-the-news')
+    listDir = listdir('../datasets/all-the-news')
     for dirs in listDir:
         with open ('../datasets/all-the-news/'+dirs) as csvf:
-            readCSV = csv.DictReader(csvf)
+            readCSV = DictReader(csvf)
             for row in readCSV:
-                temp = row['content'].lower()
-                count = temp.count(a.lower())
+                tempCont = row['content'].lower()
+                tempTitle = row['title'].lower()
+                count = tempCont.count(a.lower()) + tempTitle.count(a.lower())
                 if(count > 0):
                     tempArr = [count, row['id'], row['title']]
                     arr.append(tempArr)
@@ -31,14 +34,14 @@ def test():
     for row2 in arr:
         if count2 == 10:
             break
-        print(row2)
+        print(row2[0], row2[1], row2[2])
         count2 += 1
 
 while decrement:
 
     decrement = False
     try:
-        csv.field_size_limit(maxInt)
+        field_size_limit(maxInt)
     except OverflowError:
         maxInt = int(maxInt/10)
         decrement = True
