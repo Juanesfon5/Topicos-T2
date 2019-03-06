@@ -3,6 +3,7 @@ from csv import DictReader, field_size_limit
 from os import listdir
 from sys import maxsize
 import numpy as np
+from pandas import read_csv
 
 maxInt = maxsize
 decrement = True
@@ -30,11 +31,11 @@ def test():
         listDir = listdir('/opt/datasets')
         for dirs in listDir:
             with open ('/opt/datasets/'+dirs) as csvf:
-                readCSV = DictReader(csvf)
-                for row in readCSV:
+                readCSV = read_csv(csvf, usecols=[1,2,9])
+                for row in readCSV.values.tolist():
                     arr.append(row)
             csvf.close()
-        arr2 = np.array(arr)
+        arr2 = arr
         out = np.array_split(arr2,comm.size)
         data = out
     else:
@@ -47,19 +48,19 @@ def test():
     #print ('rank',comm.rank,'has data:',a)
     #print(len(data))
     for row in data:
-        tempCont = row['content'].lower()
-        tempTitle = row['title'].lower()
+        tempCont = row[2].lower()
+        tempTitle = row[1].lower()
         count = tempCont.count(a.lower()) + tempTitle.count(a.lower())
         if(count > 0):
-            tempArr = [count, row['id'], row['title']]
+            tempArr = [count, row[0], row[1]]
             arr3.append(tempArr)
             
-    print("en el rango", comm.rank, "el arreglo tiene", len(arr3))
+    #print("en el rango", comm.rank, "el arreglo tiene", len(arr3))
     newData = comm.gather(arr3, root=0)
     if(comm.rank == 0):
         arr4 = []
         newData = [x for x in newData if x != []] 
-        print (len(newData))
+        #print (len(newData))
         #print (newData)
         for row2 in newData:
             row2 = sorted(row2, key=lambda x: x[0])
