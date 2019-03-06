@@ -35,7 +35,7 @@ def test():
                 for row in readCSV.values.tolist():
                     arr.append(row)
             csvf.close()
-        arr2 = np.array(arr)
+        arr2 = arr
         out = np.array_split(arr2,comm.size)
         data = out
     else:
