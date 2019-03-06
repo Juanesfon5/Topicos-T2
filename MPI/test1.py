@@ -8,46 +8,80 @@ maxInt = maxsize
 decrement = True
 arr = []
 arr3 = []
+arr4 = []
 comm = MPI.COMM_WORLD
 count = 0
 
 def test():
-    with open ('/home/msanch60/Tests/dc-wikia-data.csv') as csvf:
-        readCSV = DictReader(csvf)
-        for row in readCSV:
-            arr.append(row)
+    
+    #listDir = listdir('/opt/datasets')
+    #for dirs in listDir:
+        #with open ('/opt/datasets/'+dirs) as csvf:
+            #readCSV = DictReader(csvf)
+            #for row in readCSV:
+                #arr.append(row)
+    #arr2 = np.array(arr)
+    #out = np.array_split(arr2,comm.size)
+    if comm.rank == 0:
+        try:
+            a = input('Ingrese la palabra que desea buscar: ')
+        except ValueError:
+            print ("Not a string")
+        listDir = listdir('/opt/datasets')
+        for dirs in listDir:
+            with open ('/opt/datasets/'+dirs) as csvf:
+                readCSV = DictReader(csvf)
+                for row in readCSV:
+                    arr.append(row)
+            csvf.close()
         arr2 = np.array(arr)
         out = np.array_split(arr2,comm.size)
-        if comm.rank == 0:
-            try:
-                a = input('Ingrese la palabra que desea buscar: ')
-            except ValueError:
-                print ("Not a string")
-            data = out
-        else:
-            data = None
-            a = None
+        data = out
+    else:
+        data = None
+        a = None
                         
-        a = comm.bcast(a, root=0)
-        data = comm.scatter(data, root=0)
+    a = comm.bcast(a, root=0)
+    data = comm.scatter(data, root=0)
                 
-        #print ('rank',comm.rank,'has data:',a)
-        #print(len(data))
-        for row in data:
-            tempCont = row['name'].lower()
-            #tempTitle = row['title'].lower()
-            count = tempCont.count(a.lower())
-            if(count > 0):
-                tempArr = [count, row['ID'], row['name']]
-                arr3.append(tempArr)
+    #print ('rank',comm.rank,'has data:',a)
+    #print(len(data))
+    for row in data:
+        tempCont = row['content'].lower()
+        tempTitle = row['title'].lower()
+        count = tempCont.count(a.lower()) + tempTitle.count(a.lower())
+        if(count > 0):
+            tempArr = [count, row['id'], row['title']]
+            arr3.append(tempArr)
             
-        print("en el rango", comm.rank, "el arreglo tiene", len(arr3))
-        newData = comm.gather(arr3, root=0)
-        if(comm.rank == 0):
-            newData = [x for x in newData if x != []] 
-            #print (len(newData))
-            print (newData)
-        csvf.close()
+    print("en el rango", comm.rank, "el arreglo tiene", len(arr3))
+    newData = comm.gather(arr3, root=0)
+    if(comm.rank == 0):
+        arr4 = []
+        newData = [x for x in newData if x != []] 
+        print (len(newData))
+        #print (newData)
+        for row2 in newData:
+            row2 = sorted(row2, key=lambda x: x[0])
+            row2.reverse()
+            count2 = 0
+            for aux in row2:
+                if count2 == 10:
+                    break
+                #print(aux[0], aux[1], aux[2])
+                superTempArr = [aux[0], aux[1], aux[2]]
+                arr4.append(superTempArr)
+                count2 += 1
+        arr4 = sorted(arr4, key=lambda x: x[0])
+        arr4.reverse()
+        count3 = 0
+        for row3 in arr4:
+            if count3 == 10:
+                break
+            print(row3[0],row3[1],row3[2])
+            count3 += 1
+    #csvf.close()
+    
 
 while decrement:
 
