@@ -22,12 +22,12 @@ static void contar(string archivo, vector<vector<string>> csv){
     int cantidadPalabra = 0;
     int count = 1;
     vector<string> input;
-    vector<string> id; 
-    vector<string> title; 
+    vector<string> id;
+    vector<string> title;
     vector<string> content;
-    vector<int> contador; 
+    vector<int> contador;
     ifstream archivoPy(archivo);
-    while(getline(archivoPy, linea,'/')){
+    while(getline(archivoPy, linea,'\\')){
         input.push_back(linea);
     }
     cout << input.size() << endl;
@@ -56,16 +56,16 @@ static void contar(string archivo, vector<vector<string>> csv){
         contador.push_back(cantidadPalabra);
     }
     for(int i=0;i<contador.size();i++){
-      //cout << contador.at(i) << "/ " << id.at(i) << "/ " << title.at(i) << endl;
-      cout << id.at(i) << endl;
+      cout << contador.at(i) << "/ " << id.at(i) << "/ " << title.at(i) << endl;
+      //cout << id.at(i) << endl;
     }
-    
-    
+
+
 }
 
 int main(int argc, char* argv[]) {
   string archivo = "output.txt";
   vector<vector<string>> output;
-  contar(archivo, output); 
+  contar(archivo, output);
   return 0;
 }

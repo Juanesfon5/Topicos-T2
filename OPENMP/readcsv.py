@@ -13,7 +13,7 @@ arrTitle = []
 path='./output.txt'
 
 def read():
-    with open ('/opt/datasets/articles1.csv') as csvf:
+    with open ('../all-the-news/articles1.csv') as csvf:
         read = csv.DictReader(csvf)
         for row in read:
             arrID.append(row['id'])
@@ -29,10 +29,10 @@ def writefile():
     #print(string)
     for i in range(len(arrID)):
         #print(i)
-        string +=  arrID[i]+'/'+arrTitle[i]+'/'+arrContent[i]+'/'
+        string +=  arrID[i]+'\\'+arrTitle[i]+'\\'+arrContent[i]+'\\'
         #aux = string.join( arrID[i]+'/'+arrTitle[i]+'/'+arrContent[i]+'/')
         #file.write(string)
-        #if(i == 2):
+        #if(i == 200):
             #file.write(string);
             #print(string)
             #break
