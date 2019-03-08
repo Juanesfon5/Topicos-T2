@@ -10,7 +10,8 @@ static int numeroPalabras(string texto, string palabra){
     int cnt=0;
     while(input>>texto)
     {
-        if(texto == palabra)
+      if((texto == palabra) || (texto == palabra+',') || (texto == palabra+'.') || (texto == palabra+'!') || (texto == palabra+'?') || 
+	(texto == palabra+';') || (texto == palabra+':'))   
           cnt++;
     }
     return cnt;
