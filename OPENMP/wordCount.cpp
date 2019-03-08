@@ -30,7 +30,7 @@ static void contar(string archivo, vector<vector<string>> csv){
     while(getline(archivoPy, linea,'\\')){
         input.push_back(linea);
     }
-    cout << input.size() << endl;
+    //cout << input.size() << endl;
     for(int i=0;i<input.size();i++){
         if(count == 1){
             id.push_back(input.at(i));
@@ -48,19 +48,25 @@ static void contar(string archivo, vector<vector<string>> csv){
     }
     cout << "Ingrese la palabra que desee buscar:";
     getline(cin, palabra);
-    //transform (palabra.begin(), palabra.end(), palabra.begin(), ::tolower);
+    transform (palabra.begin(), palabra.end(), palabra.begin(), ::tolower);
     for(int i=0;i<content.size();i++){
-      //transform (content.at(i).begin(), content.at(i).end(), content.at(i).begin(), ::tolower);
-      //transform (title.at(i).begin(), title.at(i).end(), title.at(i).begin(), ::tolower);
-        cantidadPalabra = numeroPalabras(content.at(i), palabra) + numeroPalabras(title.at(i), palabra);
-        contador.push_back(cantidadPalabra);
+      transform (content.at(i).begin(), content.at(i).end(), content.at(i).begin(), ::tolower);
+      transform (title.at(i).begin(), title.at(i).end(), title.at(i).begin(), ::tolower);
+      cantidadPalabra = numeroPalabras(content.at(i), palabra) + numeroPalabras(title.at(i), palabra);
+      contador.push_back(cantidadPalabra);
     }
-    for(int i=0;i<contador.size();i++){
-      cout << contador.at(i) << "/ " << id.at(i) << "/ " << title.at(i) << endl;
-      //cout << id.at(i) << endl;
+    vector<int> copia(contador);
+    sort(contador.begin(), contador.end()); 
+    reverse(contador.begin(), contador.end());
+    int i = 0;
+    while(i<=9){
+      for(int j=0;j<copia.size();j++){
+	if((contador.at(i)==copia.at(j)) && (i <= 9)){
+	  cout << contador.at(i) << "/ " << id.at(j) << "/ " << title.at(j) << endl;
+	  i++;
+	}
+      }
     }
-
-
 }
 
 int main(int argc, char* argv[]) {

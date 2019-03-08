@@ -13,7 +13,7 @@ arrTitle = []
 path='./output.txt'
 
 def read():
-    with open ('../all-the-news/articles1.csv') as csvf:
+    with open ('/opt/datasets/articles1.csv') as csvf:
         read = csv.DictReader(csvf)
         for row in read:
             arrID.append(row['id'])
