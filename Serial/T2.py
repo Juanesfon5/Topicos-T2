@@ -15,9 +15,9 @@ def test():
     arr = []
     count = 0
 
-    listDir = listdir('../datasets/all-the-news')
+    listDir = listdir('/opt/datasets')
     for dirs in listDir:
-        with open ('../datasets/all-the-news/'+dirs) as csvf:
+        with open ('/opt/datasets/'+dirs) as csvf:
             readCSV = DictReader(csvf)
             for row in readCSV:
                 tempCont = row['content'].lower()
