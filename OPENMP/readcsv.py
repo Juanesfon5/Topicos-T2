@@ -31,7 +31,7 @@ def writefile():
     #print(string)
     for i in range(len(arrID)):
         #print(i)
-        string +=  arrID[i]+'\\'+arrTitle[i]+'\\'+arrContent[i]+'\\'
+        string +=  arrID[i]+'\''+arrTitle[i]+'\''+arrContent[i]+'\''
         #aux = string.join( arrID[i]+'/'+arrTitle[i]+'/'+arrContent[i]+'/')
         #file.write(string)
         #if(i == 200):

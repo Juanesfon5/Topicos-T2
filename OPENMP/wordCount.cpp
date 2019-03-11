@@ -11,7 +11,7 @@ static int numeroPalabras(string texto, string palabra){
     while(input>>texto)
     {
       if((texto == palabra) || (texto == palabra+',') || (texto == palabra+'.') || (texto == palabra+'!') || (texto == palabra+'?') || 
-	(texto == palabra+';') || (texto == palabra+':'))   
+	 (texto == palabra+';') || (texto == palabra+':'))   
           cnt++;
     }
     return cnt;
@@ -28,7 +28,7 @@ static void contar(string archivo, vector<vector<string>> csv){
     vector<string> content;
     vector<int> contador;
     ifstream archivoPy(archivo);
-    while(getline(archivoPy, linea,'\\')){
+    while(getline(archivoPy, linea,'\'')){
         input.push_back(linea);
     }
     //cout << input.size() << endl;
@@ -47,6 +47,9 @@ static void contar(string archivo, vector<vector<string>> csv){
             count = 1;
         }
     }
+    cout << id.size() << endl;
+    cout << title.size() << endl;
+    cout << content.size() << endl;
     cout << "Ingrese la palabra que desee buscar:";
     getline(cin, palabra);
     transform (palabra.begin(), palabra.end(), palabra.begin(), ::tolower);
