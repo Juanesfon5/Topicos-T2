@@ -13,15 +13,17 @@ arrTitle = []
 path='./output.txt'
 
 def read():
-    with open ('/opt/datasets/articles1.csv') as csvf:
-        read = csv.DictReader(csvf)
-        for row in read:
-            arrID.append(row['id'])
-            arrContent.append(row['content'])
-            arrTitle.append(row['title'])
-        print('fucking done', ' size id:',len(arrID),' size content: ',len(arrContent),' size title:',len(arrTitle))
-        csvf.close()
-        writefile()
+    listDir = listdir('/opt/datasets')
+    for dirs in listDir:
+        with open ('/opt/datasets/' + dirs) as csvf:
+            read = csv.DictReader(csvf)
+            for row in read:
+                arrID.append(row['id'])
+                arrContent.append(row['content'])
+                arrTitle.append(row['title'])
+            print('fucking done', ' size id:',len(arrID),' size content: ',len(arrContent),' size title:',len(arrTitle))
+            csvf.close()
+            writefile()
 
 def writefile():
     file = open(path,'w')
