@@ -31,8 +31,10 @@ def test():
         listDir = listdir('/opt/datasets')
         for dirs in listDir:
             with open ('/opt/datasets/'+dirs) as csvf:
-                readCSV = read_csv(csvf, usecols=[1,2,9])
-                for row in readCSV.values.tolist():
+                #readCSV = read_csv(csvf, usecols=[1,2,9])
+                #for row in readCSV.values.tolist():
+                readCSV = DictReader(csvf)
+                for row in readCSV:
                     arr.append(row)
             csvf.close()
         arr2 = arr
@@ -48,11 +50,11 @@ def test():
     #print ('rank',comm.rank,'has data:',a)
     #print(len(data))
     for row in data:
-        tempCont = row[2].lower()
-        tempTitle = row[1].lower()
+        tempCont = row['content'].lower()
+        tempTitle = row['title'].lower()
         count = tempCont.count(a.lower()) + tempTitle.count(a.lower())
         if(count > 0):
-            tempArr = [count, row[0], row[1]]
+            tempArr = [count, row['id'], row['title']]
             arr3.append(tempArr)
             
     #print("en el rango", comm.rank, "el arreglo tiene", len(arr3))
