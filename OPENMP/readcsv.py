@@ -13,9 +13,9 @@ arrTitle = []
 path='./output.txt'
 
 def read():
-    listDir = listdir('/home/amboraes/telematica/Topicos-T2/all-the-news')
+    listDir = listdir('/opt/datasets')
     for dirs in listDir:
-        with open ('/home/amboraes/telematica/Topicos-T2/all-the-news/' + dirs) as csvf:
+        with open ('/opt/datasets/' + dirs) as csvf:
             read = csv.DictReader(csvf)
             for row in read:
                 arrID.append(row['id'])

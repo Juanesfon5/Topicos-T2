@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <omp.h>
+#include <omp.h>
 
 using namespace std;
 
@@ -21,13 +22,14 @@ static int numeroPalabras(string texto, string palabra){
 static void contar(string archivo, vector<vector<string>> csv){
     string linea;
     string palabra = "";
-    int cantidadPalabra = 0;
+    //int cantidadPalabra = 0;
     int count = 1;
     vector<string> input;
     vector<string> id;
     vector<string> title;
     vector<string> content;
     vector<int> contador;
+    vector<int> copia;
     ifstream archivoPy(archivo);
     while(getline(archivoPy, linea,'\'')){
         input.push_back(linea);
@@ -48,34 +50,41 @@ static void contar(string archivo, vector<vector<string>> csv){
             count = 1;
         }
     }
-    cout << id.size() << endl;
-    cout << title.size() << endl;
-    cout << content.size() << endl;
     cout << "Ingrese la palabra que desee buscar:";
     getline(cin, palabra);
     transform (palabra.begin(), palabra.end(), palabra.begin(), ::tolower);
-    for(int i=0;i<content.size();i++){
-      transform (content.at(i).begin(), content.at(i).end(), content.at(i).begin(), ::tolower);
-      transform (title.at(i).begin(), title.at(i).end(), title.at(i).begin(), ::tolower);
-      cantidadPalabra = numeroPalabras(content.at(i), palabra) + numeroPalabras(title.at(i), palabra);
-      contador.push_back(cantidadPalabra);
-    }
-    vector<int> copia(contador);
-    sort(contador.begin(), contador.end());
-    reverse(contador.begin(), contador.end());
-    int i = 0;
-    while(i<=9){
-      for(int j=0;j<copia.size();j++){
-	if((contador.at(i)==copia.at(j)) && (i <= 9)){
-	  cout << contador.at(i) << "/ " << id.at(j) << "/ " << title.at(j) << endl;
-	  i++;
-	}
+#pragma omp parallel private(contador, copia)
+    {
+      int cantidadPalabra = 0;
+#pragma omp for schedule(dynamic) 
+      for(int i=0;i<content.size();i++){
+	transform (content.at(i).begin(), content.at(i).end(), content.at(i).begin(), ::tolower);
+	transform (title.at(i).begin(), title.at(i).end(), title.at(i).begin(), ::tolower);
+	cantidadPalabra = numeroPalabras(content.at(i), palabra) + numeroPalabras(title.at(i), palabra);
+	contador.push_back(cantidadPalabra);
       }
+      //cout << contador.size() << endl;
+      //}
+      //cout << contador.size() << endl;
+      copia = contador;
+      sort(contador.begin(), contador.end());
+      reverse(contador.begin(), contador.end());
+      cout << contador.at(0) << " " << copia.at(0) << endl;
+            
+      /*int i = 0;
+      while(i<=9){
+	for(int j=0;j<copia.size();j++){
+	  if((contador.at(i)==copia.at(j)) && (i <= 9)){
+	    cout << contador.at(i) << "/ " << id.at(j) << "/ " << title.at(j) << endl;
+	    i++;
+	  }
+	}
+	}*/
     }
 }
 
 int main(int argc, char* argv[]) {
-  string command = "python3 readcsv.py";
+  string command = "python readcsv.py";
   system(command.c_str());
   string archivo = "output.txt";
   vector<vector<string>> output;
