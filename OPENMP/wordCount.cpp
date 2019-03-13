@@ -4,6 +4,7 @@
 #include <vector>
 #include <omp.h>
 #include <omp.h>
+#include <map>
 
 using namespace std;
 
@@ -23,6 +24,7 @@ static void contar(string archivo, vector<vector<string>> csv){
     string linea;
     string palabra = "";
     //int cantidadPalabra = 0;
+    map<int, int> auxiliar;
     int count = 1;
     vector<string> input;
     vector<string> id;
@@ -63,6 +65,7 @@ static void contar(string archivo, vector<vector<string>> csv){
 	transform (content.at(i).begin(), content.at(i).end(), content.at(i).begin(), ::tolower);
 	transform (title.at(i).begin(), title.at(i).end(), title.at(i).begin(), ::tolower);
 	cantidadPalabra = numeroPalabras(content.at(i), palabra) + numeroPalabras(title.at(i), palabra);
+	auxiliar[i] = cantidadPalabra;
 	contador.push_back(cantidadPalabra);
       }
       //cout << contador.size() << endl;
@@ -90,16 +93,28 @@ static void contar(string archivo, vector<vector<string>> csv){
 	  }
 	}
 	}*/
-    }copia2=copia;
+
+    }
+    cout << auxiliar.size() << endl;
+    copia2=copia;
     sort(copia.begin(),copia.end());
     reverse(copia.begin(),copia.end());
-    cout << copia.at(0) << endl;
-    int i = 0;
+    //cout << copia.at(0) << endl;
+    /*int i = 0;
     while(i<=9){
       for(int j=0;j<copia2.size();j++){
 	if((copia.at(i)==copia2.at(j)) && (i <= 9)){
 	  cout << copia.at(i) << "/ " << id.at(j) << "/ " << title.at(j) << endl;
 	  i++;
+	}
+      }
+      }*/
+    int i = 0;
+    while(i<=9){
+      for(int j=0;j<auxiliar.size();j++){
+	if(auxiliar.at(j) == copia.at(i)){
+	  cout << copia.at(i) << "/ " << id.at(j) << "/ " << title.at(j) << endl;
+          i++;
 	}
       }
     }

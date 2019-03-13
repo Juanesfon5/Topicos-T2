@@ -1,7 +1,7 @@
 import csv
 from csv import field_size_limit
 from os import listdir
-from pandas import read_csv
+#from pandas import read_csv
 from sys import maxsize
 
 
