@@ -11,8 +11,8 @@ static int numeroPalabras(string texto, string palabra){
     int cnt=0;
     while(input>>texto)
     {
-      if((texto == palabra) || (texto == palabra+',') || (texto == palabra+'.') || (texto == palabra+'!') || (texto == palabra+'?') || 
-	 (texto == palabra+';') || (texto == palabra+':'))   
+      if((texto == palabra) || (texto == palabra+',') || (texto == palabra+'.') || (texto == palabra+'!') || (texto == palabra+'?') ||
+	 (texto == palabra+';') || (texto == palabra+':'))
           cnt++;
     }
     return cnt;
@@ -61,7 +61,7 @@ static void contar(string archivo, vector<vector<string>> csv){
       contador.push_back(cantidadPalabra);
     }
     vector<int> copia(contador);
-    sort(contador.begin(), contador.end()); 
+    sort(contador.begin(), contador.end());
     reverse(contador.begin(), contador.end());
     int i = 0;
     while(i<=9){
@@ -75,6 +75,8 @@ static void contar(string archivo, vector<vector<string>> csv){
 }
 
 int main(int argc, char* argv[]) {
+  string command = "python3 readcsv.py";
+  system(command.c_str());
   string archivo = "output.txt";
   vector<vector<string>> output;
   contar(archivo, output);
