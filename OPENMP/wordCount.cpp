@@ -5,19 +5,30 @@
 #include <omp.h>
 #include <omp.h>
 #include <map>
+#include <regex>
 
 using namespace std;
 
 static int numeroPalabras(string texto, string palabra){
-    stringstream input(texto);
+    //stringstream input(texto);
     int cnt=0;
-    while(input>>texto)
+  /*  while(input>>texto)
     {
       if((texto == palabra) || (texto == palabra+',') || (texto == palabra+'.') || (texto == palabra+'!') || (texto == palabra+'?') ||
 	 (texto == palabra+';') || (texto == palabra+':'))
           cnt++;
     }
-    return cnt;
+    return cnt;*/
+    //int cnt = 0;
+  regex rgx("\\w+");
+  regex_iterator<string::iterator> it(texto.begin(), texto.end(), rgx);
+  regex_iterator<string::iterator> end;
+  for(; it != end; ++it){
+    if((it->str()) == palabra){
+      cnt++;
+    }
+  }
+  return cnt;
 }
 
 static void contar(string archivo, vector<vector<string>> csv){
@@ -60,7 +71,7 @@ static void contar(string archivo, vector<vector<string>> csv){
     {
   vector<int> contador;
       int cantidadPalabra = 0;
-#pragma omp for schedule(static)  
+#pragma omp for schedule(static)
       for(int i=0;i<content.size();i++){
 	transform (content.at(i).begin(), content.at(i).end(), content.at(i).begin(), ::tolower);
 	transform (title.at(i).begin(), title.at(i).end(), title.at(i).begin(), ::tolower);
@@ -76,14 +87,14 @@ static void contar(string archivo, vector<vector<string>> csv){
       //copia = contador;
       copia.insert(copia.end(), make_move_iterator(contador.begin()), make_move_iterator(contador.end()));
 }     //cout << copia.size() << "Holi no joda" << copia.at(0)  << endl;
-     
+
       //cout << copia.size() << endl;
       /*
       sort(contador.begin(), contador.end());
       reverse(contador.begin(), contador.end());
       cout << contador.at(0) << " " << copia.at(0) << endl;
       */
-  
+
       /*int i = 0;
       while(i<=9){
 	for(int j=0;j<copia.size();j++){
@@ -112,7 +123,7 @@ static void contar(string archivo, vector<vector<string>> csv){
     int i = 0;
     while(i<=9){
       for(int j=0;j<auxiliar.size();j++){
-	if(auxiliar.at(j) == copia.at(i)){
+	if((auxiliar.at(j) == copia.at(i))  && (i <= 9)){
 	  cout << copia.at(i) << "/ " << id.at(j) << "/ " << title.at(j) << endl;
           i++;
 	}
