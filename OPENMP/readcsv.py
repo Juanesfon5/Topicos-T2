@@ -1,7 +1,6 @@
 import csv
 from csv import field_size_limit
 from os import listdir
-#from pandas import read_csv
 from sys import maxsize
 
 
@@ -28,16 +27,8 @@ def read():
 def writefile():
     file = open(path,'w')
     string = ""
-    #print(string)
     for i in range(len(arrID)):
-        #print(i)
         string +=  arrID[i]+'\''+arrTitle[i]+'\''+arrContent[i]+'\''
-        #aux = string.join( arrID[i]+'/'+arrTitle[i]+'/'+arrContent[i]+'/')
-        #file.write(string)
-        #if(i == 200):
-            #file.write(string);
-            #print(string)
-            #break
     file.write(string)
 while decrement:
     decrement = False

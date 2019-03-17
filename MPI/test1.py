@@ -4,6 +4,7 @@ from os import listdir
 from sys import maxsize
 import numpy as np
 from pandas import read_csv
+from re import findall
 
 maxInt = maxsize
 decrement = True
