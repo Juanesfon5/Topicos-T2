@@ -3,8 +3,13 @@
 from sys import maxsize
 from csv import DictReader, field_size_limit
 from os import listdir
+from re import findall
 maxInt = maxsize
 decrement = True
+
+def countT(texto, palabra):
+    nlist = findall(r"[\w']+", texto)
+    return nlist.count(palabra)
 
 def test():
     try:
@@ -15,18 +20,24 @@ def test():
     arr = []
     count = 0
 
-    listDir = listdir('/opt/datasets')
+    listDir = listdir('../datasets/all-the-news')
     for dirs in listDir:
-        with open ('/opt/datasets/'+dirs) as csvf:
+        with open ('../datasets/all-the-news/'+dirs) as csvf:
             readCSV = DictReader(csvf)
             for row in readCSV:
                 tempCont = row['content'].lower()
+                #print(tempCont)
                 tempTitle = row['title'].lower()
-                count = tempCont.count(a.lower()) + tempTitle.count(a.lower())
+                #print("-------------------------------------------------------------------")
+                #print(tempTitle)
+                count = countT(tempCont, a.lower()) + countT(tempTitle, a.lower())
+                #print(count)
                 if(count > 0):
                     tempArr = [count, row['id'], row['title']]
                     arr.append(tempArr)
+                #break
         csvf.close()
+        #break
 
     arr = sorted(arr, key=lambda x: x[0])
     arr.reverse()
