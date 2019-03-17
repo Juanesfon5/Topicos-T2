@@ -26,18 +26,12 @@ def test():
             readCSV = DictReader(csvf)
             for row in readCSV:
                 tempCont = row['content'].lower()
-                #print(tempCont)
                 tempTitle = row['title'].lower()
-                #print("-------------------------------------------------------------------")
-                #print(tempTitle)
                 count = countT(tempCont, a.lower()) + countT(tempTitle, a.lower())
-                #print(count)
                 if(count > 0):
                     tempArr = [count, row['id'], row['title']]
                     arr.append(tempArr)
-                #break
         csvf.close()
-        #break
 
     arr = sorted(arr, key=lambda x: x[0])
     arr.reverse()
