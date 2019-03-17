@@ -1,4 +1,4 @@
-#### Al principio del proyecto decidimos utilizar python para el algoritmo serial ya que en este teníamos muchas facilidades a la hora de leer directorios y los archivos, y también métodos que ayudaban a la solución del problema (contar palabras)
+### Al principio del proyecto decidimos utilizar python para el algoritmo serial ya que en este teníamos muchas facilidades a la hora de leer directorios y los archivos, y también métodos que ayudaban a la solución del problema (contar palabras)
 
 ### Partitioning: 
 #### El algoritmo consiste de varias partes. Inicialmente, se recorre el directorio de los datasets y se lee cada archivo .csv. Con cada archivo en un diccionario de python, se filtraba solo el título,el ID y el contenido de cada uno y se realizaba el conteo de la palabra que anteriormente se le pasa al usuario dentro de cada archivo. 
