@@ -6,7 +6,7 @@
 
 #### El formato de busqueda debe ser asi: max 10, frecuencia de la palabra de la noticia, identificacion de la noticia, titulo de la noticia. La palabra debe ser ingresada por el usuario vis command prompt.
 
-#### Se tiene tambien una forma de implemetacion serial (la cual se encuentra en la carpeta serial) y la forma de implementacion en paralelo con OpenMP (en la carpeta OpenMP)
+#### Se tiene tambien una forma de implemetacion serial (la cual se encuentra en la carpeta serial) y la forma de implementacion en paralelo con OpenMP (en la carpeta OpenMP) y MPI (en la carpeta MPI)
 
 ## Forma de compilacion
 
