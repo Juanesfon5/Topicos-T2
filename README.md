@@ -21,4 +21,9 @@
 ### OpenMP
 #### Para compilar el algoritmo OpenMP se necesita tener el compilador de c++ en una version igual o mayor a la 4.9, se hace dentro de la carpeta OpenMP asi:
     $ g++ -std=c++11 wordCount.cpp -o wordCount
+    
+#### y para ejecutarlo
+    $ export OMP_NUM_THREADS=<numero deseado de hilos>
+    $ export OMP_DISPLAY_ENV='true'
+    $ ./wordCount
   
